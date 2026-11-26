@@ -4,12 +4,20 @@ from main import send_telegram_message
 
 def scan_products(products):
 
+    print("AMAZON DEAL HUNTER")
+    print("------------------")
+
     for product in products:
 
         result = analyze_price(
             product["current_price"],
             product["reference_price"]
         )
+
+        print(f"\nProdotto: {product['name']}")
+        print(f"Prezzo: {result['current_price']} €")
+        print(f"Sconto: {result['discount']}%")
+        print(f"Classificazione: {result['status']}")
 
         if result["discount"] >= 20:
 
@@ -24,3 +32,29 @@ def scan_products(products):
             )
 
             send_telegram_message(message)
+
+
+if __name__ == "__main__":
+
+    products = [
+        {
+            "name": "PC portatile dimostrativo",
+            "current_price": 400,
+            "reference_price": 700,
+            "url": "https://www.amazon.it/"
+        },
+        {
+            "name": "Monitor dimostrativo",
+            "current_price": 150,
+            "reference_price": 200,
+            "url": "https://www.amazon.it/"
+        },
+        {
+            "name": "Mouse dimostrativo",
+            "current_price": 30,
+            "reference_price": 35,
+            "url": "https://www.amazon.it/"
+        }
+    ]
+
+    scan_products(products)
